@@ -24,7 +24,7 @@ async function startServer() {
     res.send('Hello From Express Apollo Server');
   });
 
-  // !
+  // Connect to MongoDB
   await mongoose.connect(
     'mongodb+srv://jareer_28:xijRRSO8b1ptx8Re@cluster0.o5nyg.mongodb.net/data?retryWrites=true&w=majority',
     {
