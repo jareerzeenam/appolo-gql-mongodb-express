@@ -1,10 +1,16 @@
 const express = require('express');
-const { ApolloServer, gql } = require('apollo-server-express');
+const dotenv = require('dotenv');
+
+const { ApolloServer } = require('apollo-server-express');
 
 const typeDefs = require('./typeDefs');
 const resolvers = require('./resolvers');
 
-const mongoose = require('mongoose');
+//DB Connection config
+const connectDB = require('./config/db');
+
+// Load config
+dotenv.config({ path: './config/config.env' });
 
 async function startServer() {
   // Initialize app
@@ -25,15 +31,10 @@ async function startServer() {
   });
 
   // Connect to MongoDB
-  await mongoose.connect(
-    'mongodb+srv://jareer_28:xijRRSO8b1ptx8Re@cluster0.o5nyg.mongodb.net/data?retryWrites=true&w=majority',
-    {
-      useUnifiedTopology: true,
-      useNewUrlParser: true,
-    }
-  );
-  console.log('Mongoose Connected');
+  connectDB();
 
-  app.listen(4000, () => console.log('Server Started at 4000'));
+  app.listen(process.env.PORT, () =>
+    console.log(`Server Started at ${process.env.PORT}`)
+  );
 }
 startServer();
